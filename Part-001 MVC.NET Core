@@ -14,5 +14,12 @@
       @model.UCity
   
 <<Controller>>
-  
+      using LOGIN.Models;
+      pulic IActionResult Page2(csPerson csPerson)
+      {
+        return View(csPerson);
+      }
+      
 <<Models>>
+      public string UName{get;set;}
+      public string UCity{get;set;}
