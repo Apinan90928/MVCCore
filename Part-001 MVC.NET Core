@@ -1,0 +1,18 @@
+<<View>>
+  Page1
+      @model LOGIN.Models.csPerson;
+      <form asp-Action="Page2" method="post">
+      <input asp-for="UName" type="text">
+      <input asp-for="UCity" type="text">
+      <button type="submit"> Submit</button>
+      </form>
+      
+  Page2
+      @model LOGIN.Models.csPerson;
+      @model.UName
+      <br/>
+      @model.UCity
+  
+<<Controller>>
+  
+<<Models>>
