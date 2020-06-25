@@ -21,9 +21,14 @@
   HomeController.cs
   using Microsoft.Extensions.Configuration;
   using LOGIN.DAL;
+     private readonly IConfiguration configuration;
+     public HomeController(IConfiguration config)
+     {
+       this.configuration = config;
+     }
      public IActionResult About()
      {   
-      return View();
+       return View();
      }
      public IActionResult Page2(Customer customer)
      {
@@ -40,6 +45,9 @@
 -----------------------------------------------------------------------------------------
   DALCustomer.cs
   using System.Data.SqlClient;
+  using Microsoft.Extensions.Configuration;
+  
+    private IConfiguration configuration;
     public DALCustomer(IConfiguration configuration)
         {
             this.configuration = configuration;
