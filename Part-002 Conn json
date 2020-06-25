@@ -1,1 +1,82 @@
-json
+<<appsettings.json>>
+  "ConnectionString":{
+  "MyConnStr":"Server=192.000.00.15;Database=DBTEST;User XX;Password=XXXXXXXXXX;"
+  }
+----------------------------------------------------------------------------------------
+<<View>>
+  Page1.cshtml
+    @model LOGIN.Models.CUSTOMER;
+      <form asp-Action="Page2" method="post">
+      <input asp-for="Cust_code" type="text">
+      <input asp-for="Cust_name" type="text">
+      <button type="submit">Submit</button>
+      </form>
+  Page2.cshtml
+    @model LOGIN.Models.CUSTOMER;
+    @model.Cust_code
+    <br/>
+    @model.Cust_name
+---------------------------------------------------------------------------------------    
+<<Controllers>>
+  HomeController.cs
+  using Microsoft.Extensions.Configuration;
+  using LOGIN.DAL;
+     public IActionResult About()
+     {   
+      return View();
+     }
+     public IActionResult Page2(Customer customer)
+     {
+       DALCustomer dc = new DALCustomer(configuration);
+       string addr = dc.addCust(customer);
+       customer.ADDR = addr;
+       return View(customer);
+     }
+-----------------------------------------------------------------------------------------
+<<Model>>
+  Customer.cs
+      public string Cust_code { get; set; }
+      public string Cust_name { get; set; }
+-----------------------------------------------------------------------------------------
+  DALCustomer.cs
+  using System.Data.SqlClient;
+    public DALCustomer(IConfiguration configuration)
+        {
+            this.configuration = configuration;
+        }
+     public String addCust(Customer customer)
+        {
+            string connStr = configuration.GetConnectionString("MyConnStr");
+            SqlConnection conn = new SqlConnection(connStr);
+            conn.Open();
+
+            string query = "INSERT INTO CUSTOMER (CUST_CODE, CUST_NAME,CUST_ADDRESS) VALUES(@cust_code,@cust_name,'TEST INSERT');";
+            SqlCommand cmd = new SqlCommand(query,conn);
+            cmd.Parameters.AddWithValue("@cust_code",customer.Cust_code);
+            cmd.Parameters.AddWithValue("@cust_name",customer.Cust_name);
+            SqlDataReader reader = cmd.ExecuteReader();
+            reader.Read();
+            String Addr = "Success";
+            conn.Close();
+            return Addr;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
