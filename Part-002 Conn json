@@ -5,14 +5,14 @@
 ----------------------------------------------------------------------------------------
 <<View>>
   Page1.cshtml
-    @model LOGIN.Models.CUSTOMER;
+    @model LOGIN.Models.Customer;
       <form asp-Action="Page2" method="post">
       <input asp-for="Cust_code" type="text">
       <input asp-for="Cust_name" type="text">
       <button type="submit">Submit</button>
       </form>
   Page2.cshtml
-    @model LOGIN.Models.CUSTOMER;
+    @model LOGIN.Models.Customer;
     @model.Cust_code
     <br/>
     @model.Cust_name
